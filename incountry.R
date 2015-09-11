@@ -1,7 +1,10 @@
 # Matthias Haeni
 
-incountry <- function(X,Y) {
-  sd <- NA
+incountry <- function(df) {
+  df$points <- NA
+  df$ISO3 <- NA
+  s <- getMap(resolution="high")
+  uz <- as.character(unique(s$ISO3))    
   for(zt in c(1:length(uz))) {
     zz <- uz[zt]
     s <- getMap(resolution="high")
@@ -14,10 +17,10 @@ incountry <- function(X,Y) {
         us <- a@polygons[[1]]@Polygons[[qw]]
         er <- as.data.frame(us@coords)
         names(er) <- c("X","Y")
-        tz <- point.in.polygon(X,Y,er$X,er$Y)
-        if(tz>0) {sd <- zz; break; break}
+        df$points <- point.in.polygon(df$X,df$Y,er$X,er$Y)
+        df$ISO3[df$points>0] <- zz
       }
     }
   }
-  return(sd)
+  return(df)
 }
