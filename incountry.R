@@ -4,8 +4,9 @@ incountry <- function(df) {
   df$points <- NA
   df$ISO3 <- NA
   s <- getMap(resolution="high")
-  uz <- as.character(unique(s$ISO3))    
+  uz <- as.character(unique(s$ISO3))
   for(zt in c(1:length(uz))) {
+    print(paste(zt,"/",length(uz)))
     zz <- uz[zt]
     s <- getMap(resolution="high")
     ran <- which(s$ISO3==zz)
